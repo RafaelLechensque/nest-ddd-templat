@@ -1,4 +1,4 @@
-import { AppDataSource } from './data-source';
+import { AppDataSource } from '../data-source';
 
 async function seedDatabase() {
   console.log('🌱 Starting database seed...');
@@ -34,4 +34,5 @@ async function seedDatabase() {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 seedDatabase();

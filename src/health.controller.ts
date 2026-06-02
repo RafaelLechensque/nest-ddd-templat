@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { DatabaseConnectionService } from './database-connection.service';
+import { DatabaseConnectionService } from './database/database-connection.service';
 
 @Controller('health')
 export class HealthController {

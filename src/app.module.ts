@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { getDatabaseConfig } from './database.config';
-import { DatabaseConnectionService } from './database-connection.service';
+import { getDatabaseConfig } from './database/database.config';
+import { DatabaseConnectionService } from './database/database-connection.service';
 import { HealthController } from './health.controller';
 
 @Module({
