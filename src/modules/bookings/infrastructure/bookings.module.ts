@@ -7,10 +7,7 @@ import { IBookingSessionRepository } from '../application/repositories/booking-s
 import { TypeOrmBookingSessionRepository } from './repositories/typeorm-booking-session.repository';
 
 @Module({
-  imports: [
-    // Registra a entidade do TypeORM para este módulo
-    TypeOrmModule.forFeature([BookingSessionOrmEntity]),
-  ],
+  imports: [TypeOrmModule.forFeature([BookingSessionOrmEntity])],
   controllers: [BookingController],
   providers: [
     // Vinculamos o contrato (Interface/Classe Abstrata) à implementação real do TypeORM

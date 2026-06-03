@@ -51,6 +51,9 @@ export class BookingSession {
   get id(): string {
     return this._id;
   }
+  get gamerId(): string {
+    return this._props.gamerId;
+  }
   get roomId(): string {
     return this._props.roomId;
   }

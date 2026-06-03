@@ -6,7 +6,7 @@ export class BookingSessionMapper {
   public static toOrm(domain: BookingSession): BookingSessionOrmEntity {
     const orm = new BookingSessionOrmEntity();
     orm.id = domain.id;
-    orm.gamerId = domain.roomId; // Expondo através de getters se necessário
+    orm.gamerId = domain.gamerId; // Expondo através de getters se necessário
     orm.roomId = domain.roomId;
     orm.stationIds = domain.stationIds;
     orm.startTime = domain.startTime;

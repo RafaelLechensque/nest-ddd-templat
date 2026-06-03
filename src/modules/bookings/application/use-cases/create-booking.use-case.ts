@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { BookingSession } from '../../domain/entities/booking-session.entity';
 import { BookingType } from '../../domain/enums/booking-type.enum';
 import { IBookingSessionRepository } from '../repositories/booking-session-repository.interface';
@@ -16,7 +17,6 @@ export class CreateBookingUseCase {
   async execute(input: CreateBookingInput): Promise<{ bookingId: string }> {
     const start = new Date(input.startTime);
     const end = new Date(input.endTime);
-    const generatedId = Math.random().toString(36).substring(7); // Simulação de ID UUID
 
     // 1. Regra de Negócio Cruzada: Verificar disponibilidade no Banco de Dados
     const hasConflict = await this.bookingRepository.findOverlappingStations(
@@ -31,6 +31,8 @@ export class CreateBookingUseCase {
         'Um ou mais computadores selecionados já estão reservados para este horário (ou há um campeonato na sala).',
       );
     }
+
+    const generatedId = randomUUID();
 
     // 2. Instanciar a Entidade de Domínio (onde rodam as validações de regras SOLO/DUO/TEAM)
     const bookingSession = BookingSession.create(generatedId, {
