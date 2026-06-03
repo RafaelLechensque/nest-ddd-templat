@@ -1,4 +1,5 @@
 import { BookingType } from '../enums/booking-type.enum';
+import { BookingRuleException } from '../exceptions/booking-rule.exception';
 
 export interface BookingSessionProps {
   gamerId: string;
@@ -21,18 +22,24 @@ export class BookingSession {
   // Factory Method para garantir que a entidade nasça válida
   public static create(id: string, props: BookingSessionProps): BookingSession {
     if (props.startTime >= props.endTime) {
-      throw new Error('O horário de término deve ser maior que o de início.');
+      throw new BookingRuleException(
+        'O horário de término deve ser maior que o de início.',
+      );
     }
     if (props.type === BookingType.SOLO && props.stationIds.length !== 1) {
-      throw new Error('Reservas SOLO devem conter exatamente 1 PC.');
+      throw new BookingRuleException(
+        'Reservas SOLO devem conter exatamente 1 PC.',
+      );
     }
 
     if (props.type === BookingType.DUO && props.stationIds.length !== 2) {
-      throw new Error('Reservas DUO devem conter exatamente 2 PCs.');
+      throw new BookingRuleException(
+        'Reservas DUO devem conter exatamente 2 PCs.',
+      );
     }
 
     if (props.type === BookingType.TEAM && props.stationIds.length !== 5) {
-      throw new Error(
+      throw new BookingRuleException(
         'Reservas TEAM devem conter exatamente 5 PCs para o time.',
       );
     }

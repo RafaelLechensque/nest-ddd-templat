@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { DatabaseConnectionService } from './database/database-connection.service';
 
 async function bootstrap() {
@@ -18,6 +18,9 @@ async function bootstrap() {
   }
 
   const port = process.env.PORT ?? 3000;
+
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+
   await app.listen(port);
   logger.log(`✓ Application listening on port ${port}`);
 }

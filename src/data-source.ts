@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { DataSource } from 'typeorm';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
@@ -6,7 +5,6 @@ import * as path from 'path';
 const envFile =
   process.env.NODE_ENV === 'test' ? '.env.test' : '.env.development';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 dotenv.config({ path: envFile });
 
 export const AppDataSource = new DataSource({
@@ -16,7 +14,10 @@ export const AppDataSource = new DataSource({
   username: process.env.POSTGRES_USER || 'postgres',
   password: process.env.POSTGRES_PASSWORD || 'postgres',
   database: process.env.POSTGRES_DB || 'nest_ddd',
-  entities: [path.join(__dirname, '/**/*.entity{.ts,.js}')],
+  entities: [
+    path.join(__dirname, '/**/*.entity{.ts,.js}'),
+    path.join(__dirname, '/**/*.orm-entity{.ts,.js}'),
+  ],
   migrations: [path.join(__dirname, '/../database/migrations/*{.ts,.js}')],
   synchronize: false,
   migrationsRun: false,

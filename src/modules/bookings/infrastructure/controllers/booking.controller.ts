@@ -1,23 +1,15 @@
-import { Body, Controller, Post } from '@nestjs/common/decorators';
+import { Body, Controller, Post, UseFilters } from '@nestjs/common/decorators';
 import { CreateBookingUseCase } from '../../application/use-cases/create-booking.use-case';
-import type { CreateBookingInput } from '../../application/use-cases/create-booking.use-case';
-import { BadRequestException } from '@nestjs/common';
+import { CreateBookingDto } from '../dtos/create-booking.dto';
+import { DomainExceptionFilter } from '../filters/domain-exception.filter';
 
 @Controller('bookings')
+@UseFilters(DomainExceptionFilter)
 export class BookingController {
   constructor(private readonly createBookingUseCase: CreateBookingUseCase) {}
 
   @Post()
-  async create(@Body() body: CreateBookingInput) {
-    try {
-      const result = await this.createBookingUseCase.execute(body);
-      return { success: true, data: result };
-    } catch (error: unknown) {
-      // Qualquer erro de regra de negócio do domínio vira um 400 Bad Request automaticamente
-      if (error instanceof Error) {
-        throw new BadRequestException(error.message);
-      }
-      throw new BadRequestException('Unexpected error occurred');
-    }
+  async create(@Body() dto: CreateBookingDto) {
+    return await this.createBookingUseCase.execute(dto);
   }
 }
