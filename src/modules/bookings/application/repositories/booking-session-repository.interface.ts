@@ -10,4 +10,11 @@ export abstract class IBookingSessionRepository {
     startTime: Date,
     endTime: Date,
   ): Promise<boolean>;
+
+  // Retorna a lista de IDs de PCs ocupados
+  abstract findOccupiedStationIds(
+    roomId: string,
+    startTime: Date,
+    endTime: Date,
+  ): Promise<string[]>;
 }

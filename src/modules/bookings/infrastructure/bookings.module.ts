@@ -5,6 +5,7 @@ import { BookingController } from './controllers/booking.controller';
 import { CreateBookingUseCase } from '../application/use-cases/create-booking.use-case';
 import { IBookingSessionRepository } from '../application/repositories/booking-session-repository.interface';
 import { TypeOrmBookingSessionRepository } from './repositories/typeorm-booking-session.repository';
+import { ListAvailableStationsUseCase } from '../application/use-cases/list-available-stations.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([BookingSessionOrmEntity])],
@@ -21,6 +22,12 @@ import { TypeOrmBookingSessionRepository } from './repositories/typeorm-booking-
       inject: [IBookingSessionRepository],
       useFactory: (repo: IBookingSessionRepository) =>
         new CreateBookingUseCase(repo),
+    },
+    {
+      provide: ListAvailableStationsUseCase,
+      inject: [IBookingSessionRepository],
+      useFactory: (repo: IBookingSessionRepository) =>
+        new ListAvailableStationsUseCase(repo),
     },
   ],
 })

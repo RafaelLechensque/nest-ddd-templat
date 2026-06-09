@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { IBookingSessionRepository } from '../../application/repositories/booking-session-repository.interface';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { LessThan, MoreThan, Repository } from 'typeorm';
 import { BookingSessionOrmEntity } from '../entities/booking-session.orm-entity';
 import { BookingSession } from '../../domain/entities/booking-session.entity';
 import { BookingSessionMapper } from '../mappers/booking-session.mapper';
@@ -44,5 +44,26 @@ export class TypeOrmBookingSessionRepository implements IBookingSessionRepositor
     const conflict = await query.getOne();
 
     return !!conflict; // Retorna true se achar algum conflito, false se estiver livre
+  }
+
+  async findOccupiedStationIds(
+    roomId: string,
+    startTime: Date,
+    endTime: Date,
+  ): Promise<string[]> {
+    // Busca todas as sessões na sala onde o horário conflita
+    const sessions = await this.typeOrmRepository.find({
+      where: {
+        roomId,
+        startTime: LessThan(endTime),
+        endTime: MoreThan(startTime),
+      },
+    });
+
+    // Como cada sessão tem um array de PCs, nós "achatamos" (flat) tudo em um único array
+    const occupiedIds = sessions.flatMap((session) => session.stationIds);
+
+    // Remove duplicados (caso o mesmo PC apareça em duas consultas por erro ou campeonatos)
+    return [...new Set(occupiedIds)];
   }
 }
