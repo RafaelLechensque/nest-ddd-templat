@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getDatabaseConfig } from './database/database.config';
 import { DatabaseConnectionService } from './database/database-connection.service';
 import { HealthController } from './health.controller';
 import { BookingsModule } from './modules/bookings/infrastructure/bookings.module';
+import { PcsModule } from './modules/pcs/infrastructure/pcs.module';
 
 @Module({
   imports: [
@@ -26,8 +26,8 @@ import { BookingsModule } from './modules/bookings/infrastructure/bookings.modul
         getDatabaseConfig(configService),
       inject: [ConfigService],
     }),
-    UsersModule,
     BookingsModule,
+    PcsModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService, DatabaseConnectionService],
