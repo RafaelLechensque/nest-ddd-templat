@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { IPCStationRepository } from '../repositories/pc-station-repository.inteface';
+import { IPcStationRepository } from '../repositories/pc-station-repository.inteface';
 import { PcStation } from '../../domain/entities/pc-station.entity';
 
 export interface CreatePcStationInput {
@@ -10,9 +10,9 @@ export interface CreatePcStationInput {
 }
 
 export class CreatePcStationUseCase {
-  constructor(private readonly pcStationRepository: IPCStationRepository) {}
+  constructor(private readonly pcStationRepository: IPcStationRepository) {}
 
-  async execute(input: CreatePcStationInput): Promise<void> {
+  async execute(input: CreatePcStationInput): Promise<PcStation> {
     const generatedId = randomUUID();
 
     const lastNumber = await this.pcStationRepository.getLastPcNumber();
@@ -28,5 +28,7 @@ export class CreatePcStationUseCase {
     });
 
     await this.pcStationRepository.save(newStation);
+
+    return newStation;
   }
 }

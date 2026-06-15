@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IPCStationRepository } from '../../application/repositories/pc-station-repository.inteface';
+import { IPcStationRepository } from '../../application/repositories/pc-station-repository.inteface';
 import { PcStationOrmEntity } from '../entities/pc-station.orm-entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,7 +7,7 @@ import { PcStation } from '../../domain/entities/pc-station.entity';
 import { PcStationMapper } from '../mappers/pc-station.mapper';
 
 @Injectable()
-export class TypeormPcStationRepository implements IPCStationRepository {
+export class TypeormPcStationRepository implements IPcStationRepository {
   constructor(
     @InjectRepository(PcStationOrmEntity)
     private readonly typeOrmRepository: Repository<PcStationOrmEntity>,
@@ -63,10 +63,10 @@ export class TypeormPcStationRepository implements IPCStationRepository {
     const query = this.typeOrmRepository.createQueryBuilder('station');
 
     if (cpu) {
-      query.andWhere('station.cpu = :cpu', { cpu });
+      query.andWhere('station.cpu LIKE :cpu', { cpu: `%${cpu}%` });
     }
     if (gpu) {
-      query.andWhere('station.gpu = :gpu', { gpu });
+      query.andWhere('station.gpu LIKE :gpu', { gpu: `%${gpu}%` });
     }
     if (ram) {
       query.andWhere('station.ram = :ram', { ram });
