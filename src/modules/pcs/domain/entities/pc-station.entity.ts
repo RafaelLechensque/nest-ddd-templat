@@ -20,6 +20,18 @@ export class PcStation {
     return new PcStation(id, props);
   }
 
+  public updateSpecs(cpu: string, gpu: string, ram: number, storage: number) {
+    // Aqui você coloca regras: ex, impedir mudança se o PC estiver reservado
+    this._props.cpu = cpu;
+    this._props.gpu = gpu;
+    this._props.ram = ram;
+    this._props.storage = storage;
+  }
+
+  public markAsMaintenance(status: boolean) {
+    this._props.isUnderMaintenance = status;
+  }
+
   //Getters
   get id(): string {
     return this._id;

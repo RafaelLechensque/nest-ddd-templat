@@ -6,6 +6,8 @@ import { IPcStationRepository } from '../application/repositories/pc-station-rep
 import { TypeormPcStationRepository } from './repositories/typeorm-pc-station.repository';
 import { CreatePcStationUseCase } from '../application/use-case/create-pcs.use-case';
 import { ListPcStationsUseCase } from '../application/use-case/list-pc-stations.use-case.';
+import { UpdatePcStationUseCase } from '../application/use-case/update-pc-station.use-case';
+import { DeletePcStationUseCase } from '../application/use-case/delete-pc-station.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PcStationOrmEntity])],
@@ -27,6 +29,20 @@ import { ListPcStationsUseCase } from '../application/use-case/list-pc-stations.
       provide: ListPcStationsUseCase,
       useFactory: (pcStationRepository: IPcStationRepository) => {
         return new ListPcStationsUseCase(pcStationRepository);
+      },
+      inject: [IPcStationRepository],
+    },
+    {
+      provide: UpdatePcStationUseCase,
+      useFactory: (pcStationRepository: IPcStationRepository) => {
+        return new UpdatePcStationUseCase(pcStationRepository);
+      },
+      inject: [IPcStationRepository],
+    },
+    {
+      provide: DeletePcStationUseCase,
+      useFactory: (pcStationRepository: IPcStationRepository) => {
+        return new DeletePcStationUseCase(pcStationRepository);
       },
       inject: [IPcStationRepository],
     },
