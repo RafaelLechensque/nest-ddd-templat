@@ -19,6 +19,7 @@ import {
 } from '../dtos/update-pcs.dto';
 import { UpdatePcStationUseCase } from '../../application/use-case/update-pc-station.use-case';
 import { DeletePcStationUseCase } from '../../application/use-case/delete-pc-station.use-case';
+import { FindPcsUseCase } from '../../application/use-case/find-pcs.use-case';
 
 @Controller('pc-stations')
 export class PcStationController {
@@ -27,6 +28,7 @@ export class PcStationController {
     private readonly listPcStationsUseCase: ListPcStationsUseCase,
     private readonly updatePcUseCase: UpdatePcStationUseCase,
     private readonly deletePcStationUseCase: DeletePcStationUseCase,
+    private readonly findPcsUseCase: FindPcsUseCase,
   ) {}
 
   @Post()
@@ -47,6 +49,11 @@ export class PcStationController {
       ram: ram ? Number(ram) : undefined,
       storage: storage ? Number(storage) : undefined,
     });
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return await this.findPcsUseCase.execute(id);
   }
 
   @Get('under-maintenance')

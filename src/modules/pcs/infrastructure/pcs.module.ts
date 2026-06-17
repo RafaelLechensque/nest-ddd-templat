@@ -8,6 +8,7 @@ import { CreatePcStationUseCase } from '../application/use-case/create-pcs.use-c
 import { ListPcStationsUseCase } from '../application/use-case/list-pc-stations.use-case.';
 import { UpdatePcStationUseCase } from '../application/use-case/update-pc-station.use-case';
 import { DeletePcStationUseCase } from '../application/use-case/delete-pc-station.use-case';
+import { FindPcsUseCase } from '../application/use-case/find-pcs.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([PcStationOrmEntity])],
@@ -43,6 +44,13 @@ import { DeletePcStationUseCase } from '../application/use-case/delete-pc-statio
       provide: DeletePcStationUseCase,
       useFactory: (pcStationRepository: IPcStationRepository) => {
         return new DeletePcStationUseCase(pcStationRepository);
+      },
+      inject: [IPcStationRepository],
+    },
+    {
+      provide: FindPcsUseCase,
+      useFactory: (pcStationRepository: IPcStationRepository) => {
+        return new FindPcsUseCase(pcStationRepository);
       },
       inject: [IPcStationRepository],
     },
