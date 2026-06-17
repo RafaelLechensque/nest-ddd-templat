@@ -8,6 +8,7 @@ import { DatabaseConnectionService } from './database/database-connection.servic
 import { HealthController } from './health.controller';
 import { BookingsModule } from './modules/bookings/infrastructure/bookings.module';
 import { PcsModule } from './modules/pcs/infrastructure/pcs.module';
+import { GameRoomModule } from './modules/rooms/room.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PcsModule } from './modules/pcs/infrastructure/pcs.module';
     }),
     BookingsModule,
     PcsModule,
+    GameRoomModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService, DatabaseConnectionService],

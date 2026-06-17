@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { GameRoomOrmEntity } from '../../../rooms/infrastructure/entities/game-room.orm-entity';
 
 @Entity('pc_stations')
 export class PcStationOrmEntity {
@@ -22,4 +23,7 @@ export class PcStationOrmEntity {
 
   @Column({ default: false })
   isUnderMaintenance!: boolean;
+
+  @ManyToOne(() => GameRoomOrmEntity, (room) => room.pcStation)
+  gameRoom!: GameRoomOrmEntity;
 }
