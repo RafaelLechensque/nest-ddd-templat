@@ -21,19 +21,6 @@ export class GameRoom {
     if (!props.name || props.name.trim() === '') {
       throw new Error('Sala de jogo deve ter um nome válido.');
     }
-    // if (!props.stations || props.stations.length <= 0) {
-    //   throw new Error(
-    //     'Sala de jogo deve ter pelo menos uma estação de jogo válida.',
-    //   );
-    // }
-
-    // props.stations.forEach((pc) => {
-    //   if (pc.isUnderMaintenance) {
-    //     throw new Error(
-    //       `O PC ${pc.number} está em manutenção e não pode ser adicionado à sala de jogo.`,
-    //     );
-    //   }
-    // });
 
     if (props.stations.length > 0) {
       props.stations.forEach((pc) => {
