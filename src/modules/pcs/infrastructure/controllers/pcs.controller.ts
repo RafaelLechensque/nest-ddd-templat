@@ -51,14 +51,14 @@ export class PcStationController {
     });
   }
 
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return await this.findPcsUseCase.execute(id);
-  }
-
   @Get('under-maintenance')
   async findAllUnderMaintenance() {
     return await this.listPcStationsUseCase.execute({ status: 'maintenance' });
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return await this.findPcsUseCase.execute(id);
   }
 
   // PUT: O DTO deve exigir todos os campos (usando @IsNotEmpty)

@@ -7,6 +7,8 @@ export abstract class IPcStationRepository {
 
   abstract findById(id: string): Promise<PcStation | null>;
 
+  abstract findByIds(ids: string[]): Promise<PcStation[]>;
+
   abstract findByNumber(number: number): Promise<PcStation | null>;
 
   abstract getLastPcNumber(): Promise<number>;

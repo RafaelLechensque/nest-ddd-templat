@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import { IPcStationRepository } from '../repositories/pc-station-repository.inteface';
 import { PcStation } from '../../domain/entities/pc-station.entity';
 
-export interface CreatePcStationInput {
+interface CreatePcStationInput {
   cpu: string;
   gpu: string;
   ram: number;

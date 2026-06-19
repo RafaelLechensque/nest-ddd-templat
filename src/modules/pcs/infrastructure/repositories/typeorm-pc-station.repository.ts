@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { IPcStationRepository } from '../../application/repositories/pc-station-repository.inteface';
 import { PcStationOrmEntity } from '../entities/pc-station.orm-entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PcStation } from '../../domain/entities/pc-station.entity';
 import { PcStationMapper } from '../mappers/pc-station.mapper';
@@ -12,6 +12,13 @@ export class TypeormPcStationRepository implements IPcStationRepository {
     @InjectRepository(PcStationOrmEntity)
     private readonly typeOrmRepository: Repository<PcStationOrmEntity>,
   ) {}
+
+  async findByIds(ids: string[]): Promise<PcStation[]> {
+    const ormEntities = await this.typeOrmRepository.find({
+      where: { id: In(ids) },
+    });
+    return ormEntities.map((orm) => PcStationMapper.toDomain(orm));
+  }
 
   async save(station: PcStation): Promise<void> {
     const ormEntity = PcStationMapper.toOrm(station);

@@ -5,6 +5,9 @@ import { IPcStationRepository } from '../../repositories/pc-station-repository.i
 export class InMemoryPcsRepository implements IPcStationRepository {
   public items: PcStation[] = [];
 
+  async findByIds(ids: string[]): Promise<PcStation[]> {
+    return this.items.filter((pc) => ids.includes(pc.id));
+  }
   async save(pc: PcStation): Promise<void> {
     this.items.push(pc);
   }
