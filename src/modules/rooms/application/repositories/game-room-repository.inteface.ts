@@ -6,7 +6,11 @@ export abstract class IGameRoomRepository {
 
   abstract findByid(id: string): Promise<GameRoom | null>;
 
-  abstract findAll(): Promise<GameRoom[]>;
+  abstract findAll(
+    name?: string,
+    type?: RoomType,
+    stations_ids?: string[],
+  ): Promise<GameRoom[]>;
 
-  abstract findByType(type: RoomType): Promise<GameRoom[]>;
+  // abstract findByType(type: RoomType): Promise<GameRoom[]>;
 }

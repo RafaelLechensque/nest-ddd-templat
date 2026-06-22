@@ -18,17 +18,42 @@ export class TypeormGameRoomRepository implements IGameRoomRepository {
   }
 
   async findByid(id: string): Promise<GameRoom | null> {
-    const ormEntity = await this.repo.findOneBy({ id });
+    const ormEntity = await this.repo.findOne({
+      where: { id },
+      relations: {
+        pcStation: true,
+      },
+    });
     return ormEntity ? GameRoomMapper.toDomain(ormEntity) : null;
   }
 
-  async findAll(): Promise<GameRoom[]> {
-    const ormEntities = await this.repo.find();
+  async findAll(
+    name?: string,
+    type?: RoomType,
+    stations_ids?: string[],
+  ): Promise<GameRoom[]> {
+    console.log(stations_ids, typeof stations_ids);
+    console.log(Array.isArray(stations_ids));
+    const query = this.repo
+      .createQueryBuilder('room')
+      .leftJoinAndSelect('room.pcStation', 'pcStation');
+
+    if (name) query.andWhere('room.name ILIKE :name', { name: `%${name}%` });
+    if (type) query.andWhere('room.type = :type', { type });
+    if (stations_ids?.length) {
+      query
+        .innerJoin('room.pcStation', 'game_rooms')
+        .andWhere('game_rooms.id IN (:...stations_ids)', {
+          stations_ids,
+        });
+    }
+
+    const ormEntities = await query.getMany();
     return ormEntities.map((orm) => GameRoomMapper.toDomain(orm));
   }
 
-  async findByType(type: RoomType): Promise<GameRoom[]> {
-    const ormEntities = await this.repo.find({ where: { type } });
-    return ormEntities.map((orm) => GameRoomMapper.toDomain(orm));
-  }
+  // async findByType(type: RoomType): Promise<GameRoom[]> {
+  //   const ormEntities = await this.repo.find({ where: { type } });
+  //   return ormEntities.map((orm) => GameRoomMapper.toDomain(orm));
+  // }
 }

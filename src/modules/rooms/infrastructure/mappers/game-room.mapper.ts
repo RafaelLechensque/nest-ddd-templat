@@ -19,7 +19,9 @@ export class GameRoomMapper {
     return GameRoom.create(orm.id, {
       name: orm.name,
       type: orm.type,
-      stations: orm.pcStation.map((pcOrm) => PcStationMapper.toDomain(pcOrm)),
+      stations: (orm.pcStation ?? []).map((pcOrm) =>
+        PcStationMapper.toDomain(pcOrm),
+      ),
     });
   }
 }

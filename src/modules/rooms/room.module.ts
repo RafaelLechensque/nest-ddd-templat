@@ -9,6 +9,7 @@ import { IPcStationRepository } from '../pcs/application/repositories/pc-station
 import { TypeormPcStationRepository } from '../pcs/infrastructure/repositories/typeorm-pc-station.repository';
 import { PcsModule } from '../pcs/infrastructure/pcs.module';
 import { PcStationOrmEntity } from '../pcs/infrastructure/entities/pc-station.orm-entity';
+import { ListGameRoomUseCase } from './application/use-case/list-game-room.use-case';
 
 @Module({
   imports: [
@@ -37,6 +38,13 @@ import { PcStationOrmEntity } from '../pcs/infrastructure/entities/pc-station.or
         );
       },
       inject: [IGameRoomRepository, IPcStationRepository],
+    },
+    {
+      provide: ListGameRoomUseCase,
+      useFactory: (gameRoomRepository: IGameRoomRepository) => {
+        return new ListGameRoomUseCase(gameRoomRepository);
+      },
+      inject: [IGameRoomRepository],
     },
   ],
 })
