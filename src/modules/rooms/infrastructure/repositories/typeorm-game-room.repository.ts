@@ -32,8 +32,6 @@ export class TypeormGameRoomRepository implements IGameRoomRepository {
     type?: RoomType,
     stations_ids?: string[],
   ): Promise<GameRoom[]> {
-    console.log(stations_ids, typeof stations_ids);
-    console.log(Array.isArray(stations_ids));
     const query = this.repo
       .createQueryBuilder('room')
       .leftJoinAndSelect('room.pcStation', 'pcStation');
