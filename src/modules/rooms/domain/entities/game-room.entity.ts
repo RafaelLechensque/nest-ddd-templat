@@ -34,6 +34,12 @@ export class GameRoom {
     return new GameRoom(id, props);
   }
 
+  public updateSpecs(name: string, type: RoomType, stations: PcStation[]) {
+    this._props.name = name;
+    this._props.type = type;
+    this._props.stations = stations;
+  }
+
   //Getters
   get id(): string {
     return this._id;
