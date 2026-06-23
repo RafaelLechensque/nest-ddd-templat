@@ -24,6 +24,9 @@ export class PcStationOrmEntity {
   @Column({ default: false })
   isUnderMaintenance!: boolean;
 
-  @ManyToOne(() => GameRoomOrmEntity, (room) => room.pcStation)
+  @ManyToOne(() => GameRoomOrmEntity, (room) => room.pcStation, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
   gameRoom!: GameRoomOrmEntity;
 }

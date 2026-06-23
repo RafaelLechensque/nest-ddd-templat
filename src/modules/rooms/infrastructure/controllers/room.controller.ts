@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -13,6 +14,7 @@ import { ListGameRoomUseCase } from '../../application/use-case/list-game-room.u
 import { RoomType } from '../../domain/enums/room-type.enum';
 import { UpdateGameRoomDto } from '../dto/update-room.dto';
 import { UpdateGameRoomUseCase } from '../../application/use-case/update-game-room.use-case';
+import { DeleteGameRoomUseCase } from '../../application/use-case/delete-game-room.use-case';
 
 @Controller('game-rooms')
 export class GameRoomController {
@@ -20,6 +22,7 @@ export class GameRoomController {
     private readonly createGameRoomUseCase: CreateGameRoomUseCase,
     private readonly listGameRoomUseCase: ListGameRoomUseCase,
     private readonly updateGameRoomUseCase: UpdateGameRoomUseCase,
+    private readonly deleteGameRoomUseCase: DeleteGameRoomUseCase,
   ) {}
 
   @Post()
@@ -47,5 +50,10 @@ export class GameRoomController {
   @Patch(':id')
   async update(@Param('id') id: string, @Body() dto: UpdateGameRoomDto) {
     return await this.updateGameRoomUseCase.execute(id, dto);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    return await this.deleteGameRoomUseCase.execute(id);
   }
 }

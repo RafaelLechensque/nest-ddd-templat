@@ -11,6 +11,7 @@ import { PcsModule } from '../pcs/infrastructure/pcs.module';
 import { PcStationOrmEntity } from '../pcs/infrastructure/entities/pc-station.orm-entity';
 import { ListGameRoomUseCase } from './application/use-case/list-game-room.use-case';
 import { UpdateGameRoomUseCase } from './application/use-case/update-game-room.use-case';
+import { DeleteGameRoomUseCase } from './application/use-case/delete-game-room.use-case';
 
 @Module({
   imports: [
@@ -59,6 +60,13 @@ import { UpdateGameRoomUseCase } from './application/use-case/update-game-room.u
         );
       },
       inject: [IGameRoomRepository, IPcStationRepository],
+    },
+    {
+      provide: DeleteGameRoomUseCase,
+      useFactory: (gameRoomRepository: IGameRoomRepository) => {
+        return new DeleteGameRoomUseCase(gameRoomRepository);
+      },
+      inject: [IGameRoomRepository],
     },
   ],
 })

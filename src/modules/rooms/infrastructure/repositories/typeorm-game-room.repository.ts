@@ -12,6 +12,10 @@ export class TypeormGameRoomRepository implements IGameRoomRepository {
     private readonly repo: Repository<GameRoomOrmEntity>,
   ) {}
 
+  async delete(id: string): Promise<void> {
+    await this.repo.delete(id);
+  }
+
   async save(room: GameRoom): Promise<void> {
     const ormEntity = GameRoomMapper.toOrm(room);
     await this.repo.save(ormEntity);

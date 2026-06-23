@@ -12,5 +12,6 @@ export abstract class IGameRoomRepository {
     stations_ids?: string[],
   ): Promise<GameRoom[]>;
 
+  abstract delete(id: string): Promise<void>;
   // abstract findByType(type: RoomType): Promise<GameRoom[]>;
 }
