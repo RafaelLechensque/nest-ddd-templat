@@ -9,6 +9,7 @@ import { HealthController } from './health.controller';
 import { BookingsModule } from './modules/bookings/infrastructure/bookings.module';
 import { PcsModule } from './modules/pcs/infrastructure/pcs.module';
 import { GameRoomModule } from './modules/rooms/room.module';
+import { GamerModule } from './modules/gamers/infrastructure/gamer.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { GameRoomModule } from './modules/rooms/room.module';
     BookingsModule,
     PcsModule,
     GameRoomModule,
+    GamerModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService, DatabaseConnectionService],
