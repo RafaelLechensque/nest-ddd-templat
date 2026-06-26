@@ -1,0 +1,14 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "postgres123",
+  "database": "nest_ddd_dev",
+  "entities": ["dist/**/*.entity.js", "dist/**/*.orm-entity.js"],
+  "migrations": ["dist/database/migrations/*.js"],
+  "migrationsTableName": "typeorm_migrations",
+  "synchronize": false,
+  "logging": true,
+  "timezone": "UTC"
+}

@@ -1,0 +1,6 @@
+export enum RoomType {
+  VIP = 'VIP',
+  STANDARD = 'STANDARD',
+  STREAMER = 'STREAMER',
+  TOURNAMENT_ZONE = 'TOURNAMENT_ZONE',
+}
